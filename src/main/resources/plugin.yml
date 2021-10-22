@@ -1,0 +1,4 @@
+name: CGoLPlugin
+version: ${project.version}
+main: com.developdh.cgolplugin.CGoLPlugin
+api-version: 1.17
