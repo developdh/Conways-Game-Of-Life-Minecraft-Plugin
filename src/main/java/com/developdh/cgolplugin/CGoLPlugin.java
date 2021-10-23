@@ -1,38 +1,9 @@
 package com.developdh.cgolplugin;
 
-//import org.bukkit.command.CommandExecutor;
-//import org.bukkit.plugin.java.JavaPlugin;
-//import org.bukkit.scheduler.BukkitRunnable;
-//import java.util.LinkedList;
-//import java.util.Queue;
-//
-//public final class CGoLPlugin extends JavaPlugin {
-//
-//    @Override
-//    public void onEnable() {
-//        // Plugin startup logic
-//        getLogger().info("라이프 게임 플러그인 입갤");
-//        getCommand("lifegame").setExecutor((CommandExecutor) new StartCommand());
-//    }
-//
-//    @Override
-//    public void onDisable() {
-//        getLogger().info("라이프 게임 플러그인 퇴갤");
-//    }
-//}
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.UUID;
-import java.util.Vector;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -281,94 +252,11 @@ class Generator {
         this.outputPoints = outputPoints;
         this.outputStartPoint = outputPoints[0];
         this.onEnd = onEnd;
-
-//        if(isKeep) {
-//            for(int x = outputPoints[0].x; x <= outputPoints[1].x; x++) {
-//                for(int y = outputPoints[0].y; y <= outputPoints[1].y; y++) {
-//                    for(int z = outputPoints[0].z; z <= outputPoints[1].z; z++) {
-//                        int blockId = world.getBlockAt(x, y, z).getTypeId();
-//                        if(blockId != 0) {
-//                            int[] keep = {x - outputStartPoint.x, y - outputStartPoint.y, z - outputStartPoint.z, blockId};
-//                            keeps.add(keep);
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
     public void run() {
         Generator self = this;
         this.thread = new Thread(() -> {
             try {
-//                Process process = Runtime.getRuntime().exec("./exe/wfc_stdio.exe");
-//                self.process = process;
-//                PrintWriter writer = new PrintWriter(process.getOutputStream());
-//                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-//
-//                writer.println(input_size_x + " " + input_size_y + " " + input_size_z);
-//                writer.println((periodic_inputs[0] ? 1 : 0) + " " + (periodic_inputs[1] ? 1 : 0) + " " + (periodic_inputs[2] ? 1 : 0));
-//                writer.println((periodic_outputs[0] ? 1 : 0) + " " + (periodic_outputs[1] ? 1 : 0) + " " + (periodic_outputs[2] ? 1 : 0));
-//                writer.println(output_size_x + " " + output_size_y + " " + output_size_z);
-//                writer.println(N);
-//
-//                writer.println(keeps.size());
-//                for(int[] keep: keeps) {
-//                    writer.println(keep[0] + " " + keep[1] + " " + keep[2] + " " + keep[3]);
-//                }
-//
-//                for(int x = 0; x < input_size_x; x++) {
-//                    for(int y = 0; y < input_size_y; y++) {
-//                        for(int z = 0; z < input_size_z; z++) {
-//                            writer.println(input[x][y][z]);
-//                        }
-//                    }
-//                }
-//                writer.flush();
-//
-//                String str;
-//                while((str=reader.readLine())!=null) {
-//                    String[] args = str.split(" ");
-//                    if(args[0].equals("SET")) {
-//                        int x, y, z;
-//                        x = Integer.parseInt(args[1]) + outputStartPoint.x;
-//                        y = Integer.parseInt(args[2]) + outputStartPoint.y;
-//                        z = Integer.parseInt(args[3]) + outputStartPoint.z;
-//                        int blockId = Integer.parseInt(args[4]);
-//
-//                        self.ticker.queue.offer(() -> {
-//                            Block block = world.getBlockAt(x, y, z);
-//                            block.setType(Material.STONE);
-//                        });
-//                    } else if(args[0].equals("FINISHSET")) {
-//                        int x, y, z;
-//                        x = Integer.parseInt(args[1]) + outputStartPoint.x;
-//                        y = Integer.parseInt(args[2]) + outputStartPoint.y;
-//                        z = Integer.parseInt(args[3]) + outputStartPoint.z;
-//                        int blockId = Integer.parseInt(args[4]);
-//
-//                        self.ticker.queue.offer(() -> {
-//                            Block block = world.getBlockAt(x, y, z);
-//                            block.setType(Material.STONE);
-//                        });
-//                    } else if(args[0].equals("UNDO")) {
-//
-//                    } else if(args[0].equals("FINISH")) {
-//                        server.broadcastMessage("FINISH!!");
-//                    } else if(args[0].equals("RESET")) {
-//                        self.ticker.queue.offer(() -> {
-//                            for(int x = self.outputPoints[0].x; x <= self.outputPoints[1].x; x++) {
-//                                for(int y = self.outputPoints[0].y; y <= self.outputPoints[1].y; y++) {
-//                                    for(int z = self.outputPoints[0].z; z <= self.outputPoints[1].z; z++) {
-//                                        world.getBlockAt(x, y, z).setType(Material.AIR);
-//                                    }
-//                                }
-//                            }
-//                        });
-//                    } else {
-//                        // System.out.println(str);
-//                    }
-//                }
-
                 var board = new Board3D();
 
                 final boolean X = false;
