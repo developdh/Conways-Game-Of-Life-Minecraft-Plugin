@@ -52,21 +52,21 @@ public class StartCommand implements CommandExecutor {
 //        }
 
 
-//        int[] ltl = {5};
-//        int[] dtl = {4, 5};
-//
-//        board.enableLiveToLiveWhen(ltl);
-//        board.enableDeadToLiveWhen(dtl);
+        int[] ltl = {5};
+        int[] dtl = {4, 5};
+
+        board.enableLiveToLiveWhen(ltl);
+        board.enableDeadToLiveWhen(dtl);
 
         board.loadMap(map);
 
         for (int i = 0; i < 2; i++) {
             //player.sendMessage(TestRBT2D.grid2String(grid));
-            //boolean[][][] resmap = board.saveMap(51, 51, 51);
+            boolean[][][] resmap = board.saveMap(51, 51, 51);
             for(int x = 0; x < 10; x++){
                 for(int y = 0; y < 10; y++) {
                     for (int z = 0; z < 10; z++) {
-                        if (board.saveMap(51, 51, 51)[x][y][z])
+                        if (resmap[x][y][z])
                             world.getBlockAt(x, 4 + y, z).setType(Material.STONE);
                         else
                             world.getBlockAt(x, 4 + y, z).setType(Material.AIR);
