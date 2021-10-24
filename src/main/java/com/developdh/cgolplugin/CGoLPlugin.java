@@ -34,7 +34,6 @@ public final class CGoLPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(eventListener, this);
         this.getCommand("input").setExecutor(eventListener);
         this.getCommand("gen").setExecutor(eventListener);
-        this.getCommand("kgen").setExecutor(eventListener);
         this.getCommand("cl").setExecutor(eventListener);
         this.getCommand("genstop").setExecutor(eventListener);
         Bukkit.getConsoleSender().sendMessage(ChatColor.BLUE + "Plugin enabled");
