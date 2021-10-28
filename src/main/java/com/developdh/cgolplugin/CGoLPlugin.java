@@ -36,6 +36,8 @@ public final class CGoLPlugin extends JavaPlugin {
         this.getCommand("gen").setExecutor(eventListener);
         this.getCommand("cl").setExecutor(eventListener);
         this.getCommand("genstop").setExecutor(eventListener);
+        this.getCommand("setsurvive").setExecutor(eventListener);
+        this.getCommand("setborn").setExecutor(eventListener);
         Bukkit.getConsoleSender().sendMessage(ChatColor.BLUE + "Plugin enabled");
 
         ticker.runTaskTimer(this, 0L, 1L);
@@ -145,6 +147,12 @@ class EventListener implements Listener, CommandExecutor {
             }
 
             sender.sendMessage("ssck-ssack");
+        } else if(cmdName.equals("setsurvive")) {
+            //setsurvivecode return int array // size == args.length -1
+        } else if(cmdName.equals("setborn")) {
+            //setborncode
+        } else {
+            sender.sendMessage("Your command is wrong.");
         }
         return true;
     }
