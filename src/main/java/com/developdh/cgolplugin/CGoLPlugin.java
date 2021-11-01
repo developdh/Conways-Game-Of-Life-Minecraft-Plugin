@@ -135,7 +135,36 @@ class EventListener implements Listener, CommandExecutor {
 
             Point[] outputPoints = pointsManager.getCurrentSortedAdjustedPoints();
 
-            Generator gen = new Generator(ticker, Bukkit.getServer(), world, outputPoints, () -> {
+            int dtlindex = 2;
+
+            for(int i = 0; i < args.length; i++){
+                if(args[i].equals("born")){
+                    dtlindex = i;
+                    //sender.sendMessage("dtlindex " + dtlindex);
+                }
+                //sender.sendMessage(args[i]);
+            }
+
+            int[] ltl = new int[dtlindex-1];
+            int[] dtl = new int[args.length - dtlindex - 1];
+
+            for(int i = 0; i < dtlindex-1; i++){
+//                sender.sendMessage("args " + (i+1) + " " + args[i + 1]);
+//                sender.sendMessage("|" + Integer.parseInt(args[i + 1]) + "|");
+                ltl[i] = Integer.parseInt(args[i + 1]);
+                //sender.sendMessage("ltl = " + ltl[i]);
+            }
+            for(int i = 0; i < args.length - dtlindex - 1; i++){
+                dtl[i] = Integer.parseInt(args[i + dtlindex + 1]);
+                //sender.sendMessage("dtl = " + dtl[i]);
+            }
+
+//            int[] ltl = {3}; //survive
+//            int[] dtl = {1, 5}; //born
+
+
+
+            Generator gen = new Generator(ticker, Bukkit.getServer(), world, ltl, dtl, outputPoints, () -> {
                 generatorMap.remove(uuid);
             });
 
@@ -265,18 +294,22 @@ class Generator {
     int output_size_x;
     int output_size_y;
     int output_size_z;
-    int[] ltl = {3}; //survive
-    int[] dtl = {1, 5}; //born
+    //int[] ltl = {3}; //survive
+    //int[] dtl = {1, 5}; //born
+    int[] ltl;
+    int[] dtl;
     Point[] outputPoints;
     Point outputStartPoint;
     Ticker ticker;
     Thread thread;
     boolean stopped;
     Runnable onEnd;
-    public Generator(Ticker ticker, Server server, World world, Point[] outputPoints, Runnable onEnd) {
+    public Generator(Ticker ticker, Server server, World world, int[] ltl, int[] dtl, Point[] outputPoints, Runnable onEnd) {
         this.ticker = ticker;
         this.server = server;
         this.world = world;
+        this.ltl = ltl;
+        this.dtl = dtl;
         this.output_size_x = outputPoints[1].x - outputPoints[0].x + 1;
         this.output_size_y = outputPoints[1].y - outputPoints[0].y + 1;
         this.output_size_z = outputPoints[1].z - outputPoints[0].z + 1;
