@@ -77,7 +77,7 @@ public class Board3D {
      * @param z Z coordinate
      * @return survival or not
      */
-    private boolean nextGenerationOne(int x, int y, int z) {
+    protected boolean nextGenerationOne(int x, int y, int z) {
         final int neighborCount = CountNeighborCell(x, y, z);
         final Cell3D finding = new Cell3D(x, y, z);
         final boolean alive = map.contains(finding);

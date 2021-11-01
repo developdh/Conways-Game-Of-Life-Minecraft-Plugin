@@ -1,9 +1,6 @@
 package com.developdh.cgolplugin;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.UUID;
+import java.util.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -38,6 +35,7 @@ public final class CGoLPlugin extends JavaPlugin {
         this.getCommand("genstop").setExecutor(eventListener);
         this.getCommand("setsurvive").setExecutor(eventListener);
         this.getCommand("setborn").setExecutor(eventListener);
+        this.getCommand("status").setExecutor(eventListener);
         Bukkit.getConsoleSender().sendMessage(ChatColor.BLUE + "Plugin enabled");
 
         ticker.runTaskTimer(this, 0L, 1L);
@@ -50,6 +48,27 @@ public final class CGoLPlugin extends JavaPlugin {
 
 }
 
+class lifegameStatus {
+
+    int[] ltl = {4, 8}; //survive
+    int[] dtl = {2, 5}; //born
+
+    public int[] getltl() {
+        return this.ltl;
+    }
+    public void setltl(int[] ltl) {
+        this.ltl = ltl;
+    }
+    public int[] getdtl() {
+        return this.dtl;
+    }
+    public void setdtl(int[] dtl) {
+        this.dtl = dtl;
+    }
+
+    public lifegameStatus(){}
+}
+
 
 class PointsManagerMap extends HashMap<UUID, PointsManager> {
     PointsManager get(UUID key) {
@@ -60,9 +79,9 @@ class PointsManagerMap extends HashMap<UUID, PointsManager> {
 }
 
 class EventListener implements Listener, CommandExecutor {
-    private Ticker ticker;
-    private PointsManagerMap pointsManagerMap;
-    private HashMap<UUID, Generator> generatorMap;
+    private final Ticker ticker;
+    private final PointsManagerMap pointsManagerMap;
+    private final HashMap<UUID, Generator> generatorMap;
 
     public EventListener(Ticker ticker, PointsManagerMap pointsManagerMap, HashMap<UUID, Generator> generatorMap) {
         this.ticker = ticker;
@@ -146,21 +165,24 @@ class EventListener implements Listener, CommandExecutor {
                 }
             }
 
-            sender.sendMessage("ssck-ssack");
+            sender.sendMessage("쓱쓱싹싹");
         } else if(cmdName.equals("setsurvive")) {
+            int[] surv = Arrays.stream(args).mapToInt(Integer::parseInt).toArray();
             //setsurvivecode return int array // size == args.length -1
         } else if(cmdName.equals("setborn")) {
             //setborncode
-        } else {
-            sender.sendMessage("Your command is wrong.");
+        } else if(cmdName.equals("status")) {
+            //statuscode
+        }else {
+            sender.sendMessage("몰?루");
         }
         return true;
     }
 }
 
 class PointsManager {
-    private Point[] points = {null, null};
-    private Point[] patternPoints = {null, null};
+    private final Point[] points = {null, null};
+    private final Point[] patternPoints = {null, null};
 
     void setFirstPoint(Point point) {
         this.points[0] = point;
@@ -243,6 +265,8 @@ class Generator {
     int output_size_x;
     int output_size_y;
     int output_size_z;
+    int[] ltl = {3}; //survive
+    int[] dtl = {1, 5}; //born
     Point[] outputPoints;
     Point outputStartPoint;
     Ticker ticker;
@@ -264,13 +288,13 @@ class Generator {
         Generator self = this;
         this.thread = new Thread(() -> {
             try {
-                var board = new Board3D();
+                var board = new LimitedBoard3D(output_size_x, output_size_y, output_size_z);
 
                 final boolean X = false;
                 final boolean O = true;
 
 
-                boolean[][][] map = new boolean[output_size_x + 1][output_size_y + 1][output_size_z + 1];
+                boolean[][][] map = new boolean[output_size_x][output_size_y][output_size_z];
 
 
 
@@ -290,9 +314,6 @@ class Generator {
                         }
                     }
                 }
-
-                int[] ltl = {4, 8}; //survive
-                int[] dtl = {2, 5}; //born
 
                 board.enableLiveToLiveWhen(ltl);
                 board.enableDeadToLiveWhen(dtl);
@@ -331,6 +352,7 @@ class Generator {
                 // System.out.println("DEAD");
             } catch(ArrayIndexOutOfBoundsException | InterruptedException e) {
                 e.printStackTrace();
+                this.stop();
             }
         });
 
