@@ -135,32 +135,50 @@ class EventListener implements Listener, CommandExecutor {
 
             Point[] outputPoints = pointsManager.getCurrentSortedAdjustedPoints();
 
-            int dtlindex = 2;
+            int ltlindex = -1;
+            int dtlindex = -1;
+            int ltlcnt = 0;
+            int dtlcnt = 0;
+            int[] ltl = new int[0];
+            int[] dtl = new int[0];
 
-            for(int i = 0; i < args.length; i++){
-                if(args[i].equals("born")){
-                    dtlindex = i;
-                    //sender.sendMessage("dtlindex " + dtlindex);
+            if(args[0].equals("default"))
+            {
+                ltl = new int[]{3};
+                dtl = new int[]{1, 5};
+            } else {
+                for (int i = 0; i < args.length; i++) {
+                    if (args[i].equals("survive")) {
+                        ltlindex = i;
+                        ltlcnt++;
+                    }
                 }
-                //sender.sendMessage(args[i]);
+
+                for (int i = 0; i < args.length; i++) {
+                    if (args[i].equals("born")) {
+                        dtlindex = i;
+                        dtlcnt++;
+                    }
+                }
+
+                if (ltlindex != 0 || dtlindex < 2 || ltlcnt != 1 || dtlcnt != 1 || ltlindex >= dtlindex) {
+                    player.sendMessage("input : /gen survive {survive} born {born} | /gen default");
+                    return true;
+                }
+
+
+                ltl = new int[dtlindex - 1];
+                dtl = new int[args.length - dtlindex - 1];
+
+                for (int i = 0; i < dtlindex - 1; i++) {
+                    ltl[i] = Integer.parseInt(args[i + 1]);
+                }
+                for (int i = 0; i < args.length - dtlindex - 1; i++) {
+                    dtl[i] = Integer.parseInt(args[i + dtlindex + 1]);
+                }
             }
 
-            int[] ltl = new int[dtlindex-1];
-            int[] dtl = new int[args.length - dtlindex - 1];
 
-            for(int i = 0; i < dtlindex-1; i++){
-//                sender.sendMessage("args " + (i+1) + " " + args[i + 1]);
-//                sender.sendMessage("|" + Integer.parseInt(args[i + 1]) + "|");
-                ltl[i] = Integer.parseInt(args[i + 1]);
-                //sender.sendMessage("ltl = " + ltl[i]);
-            }
-            for(int i = 0; i < args.length - dtlindex - 1; i++){
-                dtl[i] = Integer.parseInt(args[i + dtlindex + 1]);
-                //sender.sendMessage("dtl = " + dtl[i]);
-            }
-
-//            int[] ltl = {3}; //survive
-//            int[] dtl = {1, 5}; //born
 
 
 
@@ -294,8 +312,6 @@ class Generator {
     int output_size_x;
     int output_size_y;
     int output_size_z;
-    //int[] ltl = {3}; //survive
-    //int[] dtl = {1, 5}; //born
     int[] ltl;
     int[] dtl;
     Point[] outputPoints;
