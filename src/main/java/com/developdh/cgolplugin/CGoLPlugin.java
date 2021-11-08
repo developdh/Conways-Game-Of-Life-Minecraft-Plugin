@@ -20,6 +20,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+/**
+ * @author developdh, 2021
+ */
+
 public final class CGoLPlugin extends JavaPlugin {
     Ticker ticker = new Ticker();
     PointsManagerMap pointsManagerMap = new PointsManagerMap();
@@ -33,9 +37,6 @@ public final class CGoLPlugin extends JavaPlugin {
         this.getCommand("gen").setExecutor(eventListener);
         this.getCommand("cl").setExecutor(eventListener);
         this.getCommand("genstop").setExecutor(eventListener);
-        this.getCommand("setsurvive").setExecutor(eventListener);
-        this.getCommand("setborn").setExecutor(eventListener);
-        this.getCommand("status").setExecutor(eventListener);
         Bukkit.getConsoleSender().sendMessage(ChatColor.BLUE + "Plugin enabled");
 
         ticker.runTaskTimer(this, 0L, 1L);
@@ -47,28 +48,6 @@ public final class CGoLPlugin extends JavaPlugin {
     }
 
 }
-
-class lifegameStatus {
-
-    int[] ltl = {4, 8}; //survive
-    int[] dtl = {2, 5}; //born
-
-    public int[] getltl() {
-        return this.ltl;
-    }
-    public void setltl(int[] ltl) {
-        this.ltl = ltl;
-    }
-    public int[] getdtl() {
-        return this.dtl;
-    }
-    public void setdtl(int[] dtl) {
-        this.dtl = dtl;
-    }
-
-    public lifegameStatus(){}
-}
-
 
 class PointsManagerMap extends HashMap<UUID, PointsManager> {
     PointsManager get(UUID key) {
@@ -212,7 +191,7 @@ class EventListener implements Listener, CommandExecutor {
                 }
             }
 
-            sender.sendMessage("쓱쓱싹싹");
+            sender.sendMessage("Clear Scope");
         } else if(cmdName.equals("setsurvive")) {
             int[] surv = Arrays.stream(args).mapToInt(Integer::parseInt).toArray();
             //setsurvivecode return int array // size == args.length -1
@@ -221,7 +200,7 @@ class EventListener implements Listener, CommandExecutor {
         } else if(cmdName.equals("status")) {
             //statuscode
         }else {
-            sender.sendMessage("몰?루");
+            sender.sendMessage("mol? lu");
         }
         return true;
     }
