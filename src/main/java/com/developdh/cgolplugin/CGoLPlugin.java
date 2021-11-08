@@ -22,6 +22,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  * @author developdh, 2021
+ * Boilerplate by JY
  */
 
 public final class CGoLPlugin extends JavaPlugin {
