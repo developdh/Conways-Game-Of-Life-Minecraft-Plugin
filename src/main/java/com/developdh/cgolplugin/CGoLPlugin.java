@@ -306,9 +306,9 @@ class Generator {
         this.world = world;
         this.ltl = ltl;
         this.dtl = dtl;
-        this.output_size_x = outputPoints[1].x - outputPoints[0].x + 1;
-        this.output_size_y = outputPoints[1].y - outputPoints[0].y + 1;
-        this.output_size_z = outputPoints[1].z - outputPoints[0].z + 1;
+        this.output_size_x = outputPoints[1].x - outputPoints[0].x - 1;
+        this.output_size_y = outputPoints[1].y - outputPoints[0].y - 1;
+        this.output_size_z = outputPoints[1].z - outputPoints[0].z - 1;
         this.outputPoints = outputPoints;
         this.outputStartPoint = outputPoints[0];
         this.onEnd = onEnd;
@@ -331,9 +331,9 @@ class Generator {
                     for (int dy = 0; dy < output_size_y; dy++) {
                         for (int dz = 0; dz < output_size_z; dz++) {
                             int x, y, z;
-                            x = dx + outputStartPoint.x;
-                            y = dy + outputStartPoint.y;
-                            z = dz + outputStartPoint.z;
+                            x = dx + outputStartPoint.x + 1;
+                            y = dy + outputStartPoint.y + 1;
+                            z = dz + outputStartPoint.z + 1;
                             if (world.getBlockAt(x, y, z).getType() == Material.STONE){
                                 map[dx][dy][dz] = O;
                             }
@@ -356,9 +356,9 @@ class Generator {
                             for (int dy = 0; dy < output_size_y; dy++) {
                                 for (int dz = 0; dz < output_size_z; dz++) {
                                     int x, y, z;
-                                    x = dx + outputStartPoint.x;
-                                    y = dy + outputStartPoint.y;
-                                    z = dz + outputStartPoint.z;
+                                    x = dx + outputStartPoint.x + 1;
+                                    y = dy + outputStartPoint.y + 1;
+                                    z = dz + outputStartPoint.z + 1;
 
                                     if (resmap[dx][dy][dz])
                                         world.getBlockAt(x, y, z).setType(Material.STONE);
